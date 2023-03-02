@@ -1,4 +1,4 @@
-package mini_projects.Login;
+package login;
 
 import java.util.Scanner;
 

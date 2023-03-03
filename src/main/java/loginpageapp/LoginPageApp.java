@@ -1,8 +1,9 @@
-package login;
+package loginpageapp;
 
-public class Informations {
+import java.util.Scanner;
 
-            /*
+/*
+
 Project: Bir siteye üye olma ve giriş yapma sayfası tasarlayınız.
 
          menü: kullanıcıya işlem seçimi için menü gösterilir.
@@ -27,16 +28,39 @@ Project: Bir siteye üye olma ve giriş yapma sayfası tasarlayınız.
                             : en az bir tane rakam içermeli
                             : en az bir tane sembol içermeli
  */
-    /*
-    1. Calistirmak icin Runner, kullanici icin User ve metodlar icin UserService class i olustur.
-    2. Menu icin showMenu metodu Uye ol, Giris yap ve Cikis.. do while
-    3. Register Kullanicidan ad-soyad, kullanici adi, email ve sifre istenecek.
-        ad-soyad, email ve sifre icin liste.
-        Kriterleri uygulayalim.
-        email ve sifre icin ayri metod kullanalim.
-
-    4. Giris metodu.
-
-     */
-
+public class LoginPageApp {
+    public static void main(String[] args) {
+        start();
+    }
+    public static void start(){
+        Scanner inp=new Scanner(System.in);
+        UserService service=new UserService();
+//1-kullanıcıya işlem menüsü gösterelim.
+        int select;
+        do {
+            System.out.println("=== TECHPROEDUCATION ===");
+            System.out.println("1-üye ol");
+            System.out.println("2-giriş yap");
+            System.out.println("0-ÇIKIŞ");
+            select= inp.nextInt();
+            switch (select){
+                case 1:
+                    //register
+                    service.register();
+                    System.out.println(service.userList);
+                    break;
+                case 2:
+                    //login
+                    service.login();
+                    break;
+                case 0:
+                    System.out.println("İyi günler dileriz...");
+                    break;
+                default:
+                    System.out.println("Hatalı giriş yaptınız, tekrar deneyiniz!");
+                    break;
+            }
+        }while (select!=0);
+//2-tüm userların ortak özellikleri olacak, user classı oluşturalım.
+    }
 }

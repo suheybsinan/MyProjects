@@ -1,6 +1,5 @@
 package bilet_rezervasyon;
 
-
 import java.util.Scanner;
 
 /*
@@ -22,16 +21,18 @@ Project: mesafeye ve şartlara göre otobüs bileti fiyatı hesaplayan uygulama
         Kişi 65 yaşından büyük ise son bilet fiyatı üzerinden %30 indirim uygulanır.
 
  */
-/*
 public class BiletRezervasyon {
     public static void main(String[] args) {
         //1-bilet rezervasyonu için otobüs objesi oluşturalım.
         Bus bus=new Bus("34 ASD 78");//"1","2"....
         //4-bilet objesi oluşturalım.
         Bilet bilet=new Bilet();
+        start(bus,bilet);
+
     }
-    public static void start(Bus bus){
+    public static void start(Bus bus,Bilet bilet){
         Scanner scan=new Scanner(System.in);
+        int select;
         do {
             //6-kullanıcıdan bilgileri alalım.
             System.out.println("Bilet Rezervasyon Sistemine Hoşgeldiniz...");
@@ -47,18 +48,71 @@ public class BiletRezervasyon {
             System.out.println("(Tekli koltuk ücreti %20 daha fazladır.)");
             System.out.println(bus.seats);
             int seat=scan.nextInt();
-            //7-seçilen koltuk noyu listeden kaldıralım.
-            bus.seats.remove(String.valueOf(seat));//"3"->"1","2","4"
+            boolean isReserved=!bus.seats.contains(String.valueOf(seat));
+            if (isReserved){
+                System.out.println("Lütfen listede aktif olan koltuk no giriniz..");
+                select=0;
+            }else {
+                //7-seçilen koltuk noyu listeden kaldıralım.
+                bus.seats.remove(String.valueOf(seat));//"3"->"1","2","4"
+            }
             //8-kullanıcıdan alınan değerler geçerli mi
             boolean check=type==1 || type==2;
-            if(distance>0 && age>0 && check){
+            if(distance>0 && age>0 && check && !isReserved){
                 //9-bilet fiyatını hesaplayalım
+                bilet.distance=distance;
+                bilet.typeNo=type;
+                bilet.seatNo=seat;
+                //getTotal ile bilet price ı set edelim
+                bilet.price=getTotal(bilet,age);
+                //bileti yazdıralım
+                System.out.println("------------------------------");
+                bilet.printBilet(bus);
             }else{
                 System.out.println("Hatalı giriş yaptınız!");
             }
+            System.out.println("Yeni işlem için herhangi bir sayı girin çıkış için 0 giriniz:");
+            select=scan.nextInt();
+        }while(select!=0);
+        System.out.println("İyi günler dileriz...");
+    }
+    private static double getTotal(Bilet bilet, int age){
+        double dist=bilet.distance;
+        int type=bilet.typeNo;
+        int seat= bilet.seatNo;
+        double total=0;
+        switch (type){
+            case 1:
+                if(seat%3==0){
+                    total=dist*1.2;
+                }else{
+                    total=dist*1;
+                }
+                System.out.println("Tutar :"+total);
+                break;
+            case 2:
+                if(seat%3==0){
+                    total=dist*2.4;
+                }else{
+                    total=dist*2;
+                }
+                System.out.println("Tutar :"+total);
+                total=total*0.8;
+                System.out.println("Çift yön indirimli Tutar :"+total);
+                break;
+        }
+        if(age<=12){
+            total=total*0.5;
+            System.out.println("yaş indirimli tutar :"+total);
+        }else if (age>12 && age<24){
+            total=total*0.9;
+            System.out.println("yaş indirimli tutar :"+total);
+        }else if(age>65){
+            total=total*0.7;
+            System.out.println("yaş indirimli tutar :"+total);
+        }
+        return total;
 
-        }while();
     }
 
 }
-*/

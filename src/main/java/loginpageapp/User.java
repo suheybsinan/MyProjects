@@ -1,5 +1,4 @@
 package loginpageapp;
-
 public class User {
     //3-name,username,email,password
     private String name;
